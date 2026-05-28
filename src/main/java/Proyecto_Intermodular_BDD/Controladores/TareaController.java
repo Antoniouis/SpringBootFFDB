@@ -10,40 +10,43 @@ import java.util.List;
 @RestController
 @RequestMapping("/empresa/tareas")
 public class TareaController {
+
     @Autowired
     private TareaService tareaService;
 
-    //LISTAR
+    //CREAR
+    @PostMapping("/crear")
+    public Tarea crearTarea(@RequestBody Tarea tarea){
+        System.out.println("EL ADMIN CREO UN NUEVO TAREA");
+        return tareaService.crear(tarea);
+    }
+
+    //LEER
     @GetMapping("/listar")
     public List<Tarea> listar(){
+        System.out.println("EL ADMIN LISTO TODOS LOS TAREAS");
         return tareaService.listar();
     }
 
-    //BUSCAR POR ID
+    //LEER POR ID
     @GetMapping("/buscar/{id}")
-    public Tarea buscar(@PathVariable Long id){
+    public Tarea bucarPorID(@PathVariable Long id){
+        System.out.println("EL ADMIN LISTO EL TAREA CON EL ID : " + id);
         return tareaService.listarPorId(id);
-    }
-
-    //CREAR TAREA
-    @PostMapping("/crear")
-    public Tarea crear(@RequestBody Tarea tarea){
-        return tareaService.crear(tarea);
     }
 
     //ACTUALIZAR
     @PutMapping("/actualizar/{id}")
-    public Tarea actualizar(@PathVariable Long id , @RequestBody Tarea tarea){
+    public Tarea actualizar(@PathVariable Long id, @RequestBody Tarea tarea){
+        System.out.println("EL ADMIN ACTUALIZO EL TAREA CON EL ID : " + id );
         return tareaService.actualizar(id, tarea);
     }
 
     //BORRAR
     @DeleteMapping("/borrar/{id}")
-    public void eliminar(@PathVariable Long id){
+    public void borrar(@PathVariable Long id){
+        System.out.println("EL ADMIN ELIMINO EL TAREA CON EL ID : " + id );
         tareaService.eliminar(id);
     }
-
-
-
 
 }
