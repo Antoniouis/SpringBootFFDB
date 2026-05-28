@@ -1025,4 +1025,4 @@ curl -X DELETE http://localhost:8095/empresa/tareas/borrar/1
 
 # Autor
 
-Proyecto desarrollado con Spring Boot para la gestión empresarial.
+Proyecto desarrollado con Spring Boot para la gestión empresarial diseñado por Antonio Luis Martos Angulo .
