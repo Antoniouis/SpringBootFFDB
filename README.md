@@ -67,7 +67,8 @@
     * [Actualizar Tarea](#actualizar-tarea)
     * [Eliminar Tarea](#eliminar-tarea)
 28. [Códigos HTTP Utilizados](#códigos-http-utilizados)
-29. [Autor](#autor)
+29. [Pruebas y Testing](#pruebas-y-testing)
+30. [Autor](#autor)
 
 # Despliegue y Estructura del Proyecto
 
@@ -1023,6 +1024,52 @@ curl -X DELETE http://localhost:8095/empresa/tareas/borrar/1
 
 ---
 
+ # Pruebas y Testing
+# Pruebas Automatizadas de la Aplicación (JUnit 5 & Spring Boot)
+
+Este repositorio contiene la batería de pruebas encargada de verificar la correcta comunicación entre la lógica de negocio (`ClienteService`), el repositorio de datos y la base de datos subyacente.
+
+---
+
+##  Qué se ha probado (Casos de Prueba)
+
+El archivo `ProyectoIntermodularBddApplicationTests.java` incluye dos bloques de pruebas diferenciados para asegurar la calidad del software:
+
+### 1. Pruebas Unitarias
+Se han desarrollado tres escenarios aislados para verificar las funciones del servicio `ClienteService`:
+* **`pruebaUno()` (Guardar cliente):** Valida que al enviar un cliente con nombre "Pepe", la aplicación lo procese correctamente y devuelva el objeto con sus datos intactos.
+* **`pruebaDos()` (Listar todos):** Comprueba que la llamada para obtener el listado completo de clientes no devuelva un valor nulo, asegurando que la conexión con la tabla está activa.
+* **`pruebaTres()` (Buscar por ID inexistente):** Verifica la robustez del sistema buscando un ID aleatorio que no existe (`67L`), controlando que el servicio responda devolviendo un `null` en lugar de romper la aplicación.
+
+### 2. Prueba de Integración
+* **`pruebaIntegracion()` (Flujo Completo):** Evalúa el comportamiento del sistema simulando una operación real de extremo a extremo. Crea un cliente ("Maria"), lo inserta en la base de datos para que Hibernate le asigne un ID único de forma automática, lo vuelve a buscar mediante ese ID recuperado y confirma con aserciones de JUnit que los datos persisten de manera correcta.
+
+---
+
+##  Cómo ejecutar las pruebas en IntelliJ IDEA
+
+Para lanzar los casos de prueba en tu entorno local, sigue cualquiera de estos tres métodos:
+
+### Método 1: Ejecutar toda la suite (Recomendado)
+1.  Busca el archivo de pruebas en la ruta:  
+    `src/test/java/Proyecto_Intermodular_BDD/ProyectoIntermodularBddApplicationTests.java`
+2.  Haz clic derecho sobre el nombre del archivo en el árbol del proyecto (zona izquierda).
+3.  Selecciona la opción **Run 'ProyectoIntermodularBdd...'** (icono de Play verde).
+4.  Se abrirá una pestaña inferior llamada *Run* mostrando el estado en verde de los tests superados.
+
+### Método 2: Ejecutar un test individual
+Si solo quieres ejecutar la prueba de integración (`pruebaIntegracion`):
+1.  Abre el archivo de código de las pruebas.
+2.  Busca el método de la prueba y localiza el **icono del Play verde** pequeño que aparece justo a la izquierda de la línea `@Test`.
+3.  Haz clic sobre él y selecciona **Run 'pruebaIntegracion()'**.
+
+### Método 3: Ejecución en modo Depuración (Paso a Paso)
+Para inspeccionar las variables por dentro y ver cómo se transforman los objetos en tiempo real:
+1.  Haz clic en el margen izquierdo de la primera línea de `pruebaIntegracion()` para colocar un **punto de ruptura (Breakpoint)** (aparecerá un círculo rojo).
+2.  Haz clic derecho sobre el método y elige la opción **Debug 'pruebaIntegracion()'** (icono del bicho verde).
+3.  Cuando el programa se detenga en la línea marcada, pulsa la tecla **`F8` (Step Over)** para ir avanzando línea por línea.
+4.  Revisa el panel inferior **Variables** para inspeccionar el contenido de los objetos (`cliente`, `cGuardado`, etc.).
+5.  
 # Autor
 
 Proyecto desarrollado con Spring Boot para la gestión empresarial diseñado por Antonio Luis Martos Angulo .
